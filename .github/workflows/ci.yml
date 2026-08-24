@@ -32,14 +32,21 @@ jobs:
     needs: docker-build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      
+      - name: Build Docker image
+        run: docker build -f Dockerfile.multi -t alex200189/node-app:${{ github.sha }} .
+      
       - name: Run container
         run: |
           docker run -d -p 3000:3000 --name test-container alex200189/node-app:${{ github.sha }}
           sleep 3
+      
       - name: Test endpoint
         run: curl http://localhost:3000
+      
       - name: Stop container
-        run: docker stop test-container && docker rm test-container
+        run: docker stop test-container && docker rm test-container 
 
   docker-push:
     needs: docker-test
