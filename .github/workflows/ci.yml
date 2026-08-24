@@ -35,7 +35,7 @@ jobs:
       - uses: actions/checkout@v4
       
       - name: Build Docker image
-        run: docker build -f Dockerfile.multi -t alex200189/node-app:${{ github.sha }} .
+        run: docker build -f Dockerfile -t alex200189/node-app:${{ github.sha }} .
       
       - name: Run container
         run: |
